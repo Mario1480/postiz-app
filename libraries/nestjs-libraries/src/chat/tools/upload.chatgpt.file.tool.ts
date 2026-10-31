@@ -71,11 +71,11 @@ export class UploadChatGPTFileTool implements AgentToolInterface {
           );
           return { id: media.id, path: media.path };
         } catch (err) {
-          const message = err instanceof Error ? err.message : String(err);
-          // Do not leak the signed, short-lived ChatGPT download URL.
+          // Signed file URLs are bearer credentials; never reflect them in tool errors.
+          const message = err instanceof Error ? err.message : 'Upload failed';
           return {
             error: `Failed to upload ChatGPT file: ${message.replace(
-              /https?:\\/\\/[^\\s)]+/g,
+              /https?:\/\/[^\s)]+/g,
               '[redacted URL]'
             )}`,
           };
