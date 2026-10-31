@@ -57,6 +57,8 @@ export const startMcp = async (app: INestApplication) => {
   // (/mcp, /mcp/:id, /sse/:id) and the ChatGPT app keep the full toolset.
   const claudeHiddenTools = [
     'generateImageTool',
+    // ChatGPT-specific host file parameters are not supported by Claude.
+    'uploadChatGPTFileTool',
     'generateVideoTool',
     'videoStatusTool',
     'generateVideoOptions',
