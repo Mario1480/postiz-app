@@ -199,6 +199,18 @@
         "open_world_justification": "Reads internal Postiz data for the user's workspace only.",
         "destructive_justification": "Read-only; it cannot change or delete anything."
       }
+    },
+    "uploadChatGPTFileTool": {
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": true,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Reads an authorized ChatGPT file and saves a copy to the connected Postiz media library.",
+        "open_world_justification": "Uses a short-lived ChatGPT file download URL to transfer the file to Postiz storage.",
+        "destructive_justification": "Creates a new media item only; never deletes, overwrites, or publishes posts."
+      }
     }
   },
   "test_cases": [
@@ -240,6 +252,14 @@
       "file_attachment_urls": null,
       "tools_triggered": "generateImageTool",
       "expected_output": "Calls generateImageTool with the prompt and returns the hosted image URL saved in the media library. If the account has no AI image credits, the tool returns a clear error message that is relayed to the user. No post is created.",
+      "expected_output_url": null
+    },
+    {
+      "description": "Upload a ChatGPT-generated image directly to the connected Postiz media library.",
+      "user_prompt": "Upload the image I just generated in ChatGPT directly into the Postiz media library without publishing any social post.",
+      "file_attachment_urls": null,
+      "tools_triggered": "uploadChatGPTFileTool",
+      "expected_output": "Receives the ChatGPT-provided file parameter, stores the image in Postiz, and returns a Postiz-hosted media path. No Google Drive upload, no Postiz image generation, and no social post is created.",
       "expected_output_url": null
     }
   ],
